@@ -70,11 +70,11 @@ jobs:
           name: build-artifact
           path: dist
       - name: Deploy to remote server
-        uses: appleboy/scp-action@v0.1.4
+        uses: nogsantos/scp-deploy@v1.3.0
         with:
-          source: dist/*
-          target: ${{ vars.DO_REMOTE }}
+          src: dist
+          remote: ${{ vars.DO_REMOTE }}
           host: ${{ secrets.DO_HOST }}
           port: ${{ secrets.DO_PORT }}
-          username: ${{ secrets.DO_USERNAME }}
+          user: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.DO_KEY }}
