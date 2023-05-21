@@ -69,14 +69,12 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Display structure of downloaded files
-        run: ls -R
       - name: Deploy to remote server
-        uses: nogsantos/scp-deploy@master
+        uses: appleboy/scp-action@v0.1.4
         with:
-          src: dist
-          remote: ${{ vars.DO_REMOTE }}
+          source: dist
+          target: ${{ vars.DO_REMOTE }}
           host: ${{ secrets.DO_HOST }}
           port: ${{ secrets.DO_PORT }}
-          user: ${{ secrets.DO_USER }}
+          username: ${{ secrets.DO_USER }}
           key: ${{ secrets.DO_KEY }}
