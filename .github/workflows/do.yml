@@ -53,12 +53,29 @@ jobs:
         run: pnpm install
       - name: Build with vite
         run: pnpm run build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: dist
+
+  # Deployment job
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+      - name: Display structure of downloaded files
+        run: ls -R
       - name: Deploy to remote server
         uses: nogsantos/scp-deploy@master
         with:
-          src: ./dist
-          remote: /root/nginx/personal-website
-          host: 165.22.98.226
-          port: 22
-          user: root
+          src: dist
+          remote: ${{ vars.DO_REMOTE }}
+          host: ${{ secrets.DO_HOST }}
+          port: ${{ secrets.DO_PORT }}
+          user: ${{ secrets.DO_USER }}
           key: ${{ secrets.DO_KEY }}
