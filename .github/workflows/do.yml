@@ -23,7 +23,7 @@ concurrency:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -61,7 +61,7 @@ jobs:
 
   # Deployment job
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     steps:
       - name: Download artifact
@@ -69,12 +69,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Deploy to remote server
-        uses: nogsantos/scp-deploy@v1.3.0
-        with:
-          src: dist
-          remote: ${{ vars.DO_REMOTE }}
-          host: ${{ secrets.DO_HOST }}
-          port: ${{ secrets.DO_PORT }}
-          user: ${{ secrets.DO_USERNAME }}
-          key: ${{ secrets.DO_KEY }}
+      - name: Display current path
+        run: pwd
+      # - name: Deploy to remote server
+      #   uses: nogsantos/scp-deploy@v1.3.0
+      #   with:
+      #     src: dist
+      #     remote: ${{ vars.DO_REMOTE }}
+      #     host: ${{ secrets.DO_HOST }}
+      #     port: ${{ secrets.DO_PORT }}
+      #     user: ${{ secrets.DO_USERNAME }}
+      #     key: ${{ secrets.DO_KEY }}
