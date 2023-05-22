@@ -64,13 +64,15 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
+      - name: Remove old folder
+        run: rm -rf /root/nginx/www/personal-website
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
-          path: dist
-      - name: Display current path
-        run: pwd
+          path: /root/nginx/www/personal-website
+      # - name: Display current path
+      #   run: pwd
       # - name: Deploy to remote server
       #   uses: nogsantos/scp-deploy@v1.3.0
       #   with:
