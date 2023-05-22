@@ -17,7 +17,6 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
   cancel-in-progress: false
 
 jobs:
@@ -71,14 +70,3 @@ jobs:
         with:
           name: build-artifact
           path: /root/nginx/www/personal-website
-      # - name: Display current path
-      #   run: pwd
-      # - name: Deploy to remote server
-      #   uses: nogsantos/scp-deploy@v1.3.0
-      #   with:
-      #     src: dist
-      #     remote: ${{ vars.DO_REMOTE }}
-      #     host: ${{ secrets.DO_HOST }}
-      #     port: ${{ secrets.DO_PORT }}
-      #     user: ${{ secrets.DO_USERNAME }}
-      #     key: ${{ secrets.DO_KEY }}
